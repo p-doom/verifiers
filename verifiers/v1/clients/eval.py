@@ -12,8 +12,8 @@ new wire format (incl. non-OpenAI providers like Anthropic) is just a new `Diale
 change. Endpoint config (base url, api key, billing headers) comes from the client config.
 """
 
-from collections.abc import Mapping
 import re
+from collections.abc import Mapping
 
 import httpx
 from pydantic import ValidationError
@@ -79,6 +79,7 @@ class EvalClient(Client):
         self.http = httpx.AsyncClient(
             timeout=None,
             limits=httpx.Limits(max_connections=128, max_keepalive_connections=20),
+            trust_env=False,
         )
 
     async def get_response(
